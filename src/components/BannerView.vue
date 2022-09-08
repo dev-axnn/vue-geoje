@@ -52,15 +52,12 @@
           @swiper="swBanner"
           class="sw-banner"
         >
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-0"></a></SwiperSlide>
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-1"></a></SwiperSlide>
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-2"></a></SwiperSlide>
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-3"></a></SwiperSlide>
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-4"></a></SwiperSlide>
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-5"></a></SwiperSlide>
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-6"></a></SwiperSlide>
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-7"></a></SwiperSlide>
-          <SwiperSlide class="swiper-slide"><a href="#" class="banner-8"></a></SwiperSlide>
+          <SwiperSlide class="swiper-slide" v-for="(item, index) in bannerData" :key="index">
+            <a :href="item.link" :style="{
+              backgroundImage:`url(${item.imgurl})`,
+              backgroundSize: 'contain', backgroundPosition: 'center'
+            }"></a>
+          </SwiperSlide>
         </Swiper>
       </div>
     </div>
@@ -68,11 +65,12 @@
 </template>
 
 <script>
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import 'swiper/css';
   import { Autoplay, Navigation } from 'swiper';
   import 'swiper/css/navigation';
+  import { useStore } from 'vuex';
 
   export default {
     components: {
@@ -80,6 +78,9 @@
       SwiperSlide
     },
     setup(){
+      const store = useStore();
+      const bannerData = computed(() => store.getters.bannerData)
+
       // Swiper 참조
       const slide = ref(null);
       const swBanner = (swiper) => {
@@ -104,7 +105,8 @@
         modules: [ Autoplay, Navigation ],
         swBanner,
         controlSlide,
-        slideState
+        slideState,
+        bannerData
       }
     }
   }
@@ -210,51 +212,6 @@
     display: block;
     height: 57px;
     border: 1px solid #e9e9e9;
-  }
-
-  .banner-0 {
-    background: #fff url('@/assets/images/img_banner01.gif') no-repeat center;
-    background-size: contain;
-  }
-
-  .banner-1 {
-    background: #fff url('@/assets/images/img_banner02.gif') no-repeat center;
-    background-size: contain;
-  }
-
-  .banner-2 {
-    background: #fff url('@/assets/images/img_banner03.gif') no-repeat center;
-    background-size: contain;
-  }
-
-  .banner-3 {
-    background: #fff url('@/assets/images/img_banner04.gif') no-repeat center;
-    background-size: contain;
-  }
-
-  .banner-4 {
-    background: #fff url('@/assets/images/img_banner05.gif') no-repeat center;
-    background-size: contain;
-  }
-
-  .banner-5 {
-    background: #fff url('@/assets/images/img_banner06.gif') no-repeat center;
-    background-size: contain;
-  }
-
-  .banner-6 {
-    background: #fff url('@/assets/images/img_banner07.gif') no-repeat center;
-    background-size: contain;
-  }
-
-  .banner-7 {
-    background: #fff url('@/assets/images/img_banner08.gif') no-repeat center;
-    background-size: contain;
-  }
-
-  .banner-8 {
-    background: #fff url('@/assets/images/img_banner09.gif') no-repeat center;
-    background-size: contain;
   }
 
   /* 배너 PC 영역 */

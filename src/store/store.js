@@ -9,7 +9,8 @@ export default createStore({
     comuInfoArr: [],
     comuNewsArr: [],
     galleryArr: [],
-    movieData: []
+    movieData: [],
+    bannerArr: []
   },
 
   actions: {
@@ -55,6 +56,13 @@ export default createStore({
         commit('UPDATE_MOVIE_DATA', res.data)
       })
       .catch(err => console.log(err))
+    },
+    fetchGetbanner({commit}){
+      axios.get('./data/banner.json')
+      .then(res => {
+        commit('UPDATE_BANNER_DATA', res.data)
+      })
+      .catch(err => console.log(err))
     }
   },
 
@@ -77,6 +85,9 @@ export default createStore({
     },
     UPDATE_MOVIE_DATA(state, payload){
       state.movieData = payload
+    },
+    UPDATE_BANNER_DATA(state, payload){
+      state.bannerData = payload
     }
   },
 
@@ -98,6 +109,9 @@ export default createStore({
     },
     movieData(state){
       return state.movieData
+    },
+    bannerData(state){
+      return state.bannerData
     }
   }
 });

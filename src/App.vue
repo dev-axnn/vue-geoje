@@ -56,6 +56,7 @@
       store.dispatch('fetchComuNews');
       store.dispatch('fetchGallery');
       store.dispatch('fetchGetMovie');
+      store.dispatch('fetchGetBanner');
       return{}
     }
   }
