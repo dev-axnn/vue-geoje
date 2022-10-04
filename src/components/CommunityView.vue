@@ -10,8 +10,8 @@
         <div class="community-main">
           <ul class="community-list data-info">
             <li v-for="(item, index) in infoData" :key="index">
-              <a :href="item.infolink">{{item.infotxt}}</a>
-              <span>{{item.infodate}}</span>
+              <a :href="item.infolink">{{ item.infotxt }}</a>
+              <span>{{ item.infodate }}</span>
             </li>
           </ul>
         </div>
@@ -24,8 +24,8 @@
         <div class="community-main">
           <ul class="community-list data-news">
             <li v-for="(item, index) in newsData" :key="index">
-              <a :href="item.newslink">{{item.newstxt}}</a>
-              <span>{{item.newsdate}}</span>
+              <a :href="item.newslink">{{ item.newstxt }}</a>
+              <span>{{ item.newsdate }}</span>
             </li>
           </ul>
         </div>
@@ -35,8 +35,8 @@
           <h3>센터일정</h3>
           <a href="#" class="community-more">전체보기</a>
         </div>
-        <div class="community-main">
-
+        <div class="community-main" style="padding-top: 0">
+          <Calendar is-expanded :attributes="attrs" />
         </div>
       </div>
     </div>
@@ -44,185 +44,194 @@
 </template>
 
 <script>
-  import { useStore } from 'vuex';
-  import { computed } from 'vue';
+import { useStore } from "vuex";
+import { computed } from "vue";
+import "v-calendar/dist/style.css";
+import { Calendar } from "v-calendar";
 
-  export default {
-    setup(){
-      const store = useStore();
-      const infoData = computed(() => store.getters.infoData);
-      const newsData = computed(() => store.getters.newsData);
+export default {
+  components: {
+    Calendar,
+  },
+  setup() {
+    const store = useStore();
+    const infoData = computed(() => store.getters.infoData);
+    const newsData = computed(() => store.getters.newsData);
+    const attrs = [
+      {
+        key: "today",
+        highlight: true,
+        dates: new Date(),
+      },
+    ];
 
-      return{
-        infoData,
-        newsData
-      }
-    }
-
-  }
+    return {
+      infoData,
+      newsData,
+      attrs,
+    };
+  },
+};
 </script>
 
 <style>
-  /* 커뮤니티 영역 */
+/* 커뮤니티 영역 */
+.community {
+  position: relative;
+  display: block;
+  padding: 70px 0;
+}
+
+.community-box {
+  position: relative;
+  display: block;
+  float: left;
+  width: 32.5%;
+  height: 372px;
+  margin-right: 1.5%;
+  padding: 30px;
+
+  overflow: hidden;
+  border: 1px solid #e6e8eb;
+}
+
+.calendar {
+  width: 32%;
+  margin-right: 0;
+}
+
+.community-top {
+  position: relative;
+  display: block;
+  padding-bottom: 20px;
+}
+
+.bg-line {
+  background: url("@/assets/images/img_bg_line.png") repeat-x;
+  background-position: 0 100%;
+}
+
+.community-top h3 {
+  position: relative;
+  display: block;
+  font-size: 22px;
+  color: #0e62b2;
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+.community-more {
+  position: absolute;
+  right: 0;
+  top: 6px;
+  display: block;
+  padding-left: 18px;
+  white-space: nowrap;
+  font-size: 15px;
+  color: #333;
+}
+
+.community-more::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  display: block;
+  width: 8px;
+  height: 2px;
+  background-color: #131313;
+}
+
+.community-more::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 8px;
+  display: block;
+  width: 2px;
+  height: 8px;
+  background-color: #131313;
+}
+
+.community-main {
+  position: relative;
+  display: block;
+  padding-top: 25px;
+}
+
+.community-list {
+  position: relative;
+  display: block;
+}
+
+.community-list li {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-bottom: 1px solid #e6e6e6;
+  line-height: 53px;
+}
+
+.community-list li:last-child {
+  border-bottom: none;
+}
+
+.community-list li a {
+  position: relative;
+  display: block;
+  float: left;
+  font-size: 16px;
+  color: #444;
+  font-weight: 300;
+
+  /* 말줄임(...) 표현 */
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-list li span {
+  position: relative;
+  display: block;
+  float: right;
+  font-size: 15px;
+  color: #444;
+}
+
+/* 커뮤니티 PC 버전 */
+/* 커뮤니티 반응형 */
+@media all and (max-width: 1000px) {
   .community {
-    position: relative;
-    display: block;
-    padding: 70px 0;
+    padding: 5vw 0;
   }
 
-  .community-box {
-    position: relative;
-    display: block;
-    float: left;
-    width: 32.5%;
-    height: 372px;
-    margin-right: 1.5%;
-    padding: 30px;
-
-    overflow: hidden;
-    border: 1px solid #e6e8eb;
+  .community-box:nth-child(1) {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
   }
 
-  .calendar {
-    width: 32%;
+  .community-box:nth-child(2) {
+    width: 49%;
+    margin-right: 2%;
+  }
+
+  .community-box:nth-child(3) {
+    width: 49%;
     margin-right: 0;
   }
+}
 
-  .community-top {
-    position: relative;
-    display: block;
-    padding-bottom: 20px;
+@media all and (max-width: 640px) {
+  .community-box:nth-child(2) {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
   }
 
-  .bg-line {
-    background: url('@/assets/images/img_bg_line.png') repeat-x;
-    background-position: 0 100%;
+  .community-box:nth-child(3) {
+    width: 100%;
   }
-
-  .community-top h3 {
-    position: relative;
-    display: block;
-    font-size: 22px;
-    color: #0e62b2;
-    font-weight: 300;
-    white-space: nowrap;
-  }
-
-  .community-more {
-    position: absolute;
-    right: 0;
-    top: 6px;
-    display: block;
-    padding-left: 18px;
-    white-space: nowrap;
-    font-size: 15px;
-    color: #333;
-  }
-
-  .community-more::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 11px;
-    display: block;
-    width: 8px;
-    height: 2px;
-    background-color: #131313;
-  }
-
-  .community-more::after {
-    content: '';
-    position: absolute;
-    left: 3px;
-    top: 8px;
-    display: block;
-    width: 2px;
-    height: 8px;
-    background-color: #131313;
-  }
-
-  .community-main {
-    position: relative;
-    display: block;
-    padding-top: 25px;
-  }
-
-  .community-list {
-    position: relative;
-    display: block;
-
-  }
-
-  .community-list li {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    border-bottom: 1px solid #e6e6e6;
-    line-height: 53px;
-  }
-
-  .community-list li:last-child {
-    border-bottom: none;
-  }
-
-  .community-list li a {
-    position: relative;
-    display: block;
-    float: left;
-    font-size: 16px;
-    color: #444;
-    font-weight: 300;
-
-    /* 말줄임(...) 표현 */
-    width: 70%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-  }
-
-  .community-list li span {
-    position: relative;
-    display: block;
-    float: right;
-    font-size: 15px;
-    color: #444;
-  }
-
-  /* 커뮤니티 PC 버전 */
-  /* 커뮤니티 반응형 */
-  @media all and (max-width: 1000px) {
-
-    .community {
-      padding: 5vw 0;
-    }
-
-    .community-box:nth-child(1) {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 20px;
-    }
-
-    .community-box:nth-child(2) {
-      width: 49%;
-      margin-right: 2%;
-    }
-
-    .community-box:nth-child(3) {
-      width: 49%;
-      margin-right: 0;
-    }
-  }
-
-  @media all and (max-width: 640px) {
-    .community-box:nth-child(2) {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 20px;
-    }
-
-    .community-box:nth-child(3) {
-      width: 100%;
-    }
-  }
+}
 </style>

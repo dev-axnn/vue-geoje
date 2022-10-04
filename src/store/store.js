@@ -57,7 +57,7 @@ export default createStore({
       })
       .catch(err => console.log(err))
     },
-    fetchGetbanner({commit}){
+    fetchGetBanner({commit}){
       axios.get('./data/banner.json')
       .then(res => {
         commit('UPDATE_BANNER_DATA', res.data)
